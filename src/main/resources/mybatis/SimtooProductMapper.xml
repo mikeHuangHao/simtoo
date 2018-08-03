@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.module.simtooProduct.mapper.SimtooProductMapper">
+    
+    <resultMap type="SimtooProduct" id="SimtooProductResult">
+        <result property="productId"    column="product_id"    />
+        <result property="name"    column="name"    />
+        <result property="title"    column="title"    />
+        <result property="money"    column="money"    />
+        <result property="productLunImg"    column="product_lun_img"    />
+        <result property="productDescribe"    column="product_describe"    />
+        <result property="inventoryNumber"    column="inventory_number"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="specs"    column="specs"    />
+        <result property="video"    column="video"    />
+        <result property="productFile"    column="product_file"    />
+        <result property="faq"    column="faq"    />
+        <result property="isState"    column="is_state"    />
+        <result property="isFlg"    column="is_flg"    />
+        <result property="menuId"    column="menu_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectSimtooProductVo">
+        select product_id, name, title, money, product_lun_img, product_describe, inventory_number, introduction, specs, video, product_file, faq, is_state, is_flg, menu_id, create_time, update_time from s_simtoo_product
+    </sql>
+	
+    <select id="selectSimtooProductList" parameterType="SimtooProduct" resultMap="SimtooProductResult">
+        <include refid="selectSimtooProductVo"/>
+        <where>  
+            <if test="productId != null and productId != ''"> and product_id = #{productId}</if>
+             <if test="name != null and name != ''"> and name = #{name}</if>
+             <if test="title != null and title != ''"> and title = #{title}</if>
+             <if test="money != null and money != ''"> and money = #{money}</if>
+             <if test="productLunImg != null and productLunImg != ''"> and product_lun_img = #{productLunImg}</if>
+             <if test="productDescribe != null and productDescribe != ''"> and product_describe = #{productDescribe}</if>
+             <if test="inventoryNumber != null and inventoryNumber != ''"> and inventory_number = #{inventoryNumber}</if>
+             <if test="introduction != null and introduction != ''"> and introduction = #{introduction}</if>
+             <if test="specs != null and specs != ''"> and specs = #{specs}</if>
+             <if test="video != null and video != ''"> and video = #{video}</if>
+             <if test="productFile != null and productFile != ''"> and product_file = #{productFile}</if>
+             <if test="faq != null and faq != ''"> and faq = #{faq}</if>
+             <if test="isState != null and isState != ''"> and is_state = #{isState}</if>
+             <if test="isFlg != null and isFlg != ''"> and is_flg = #{isFlg}</if>
+             <if test="menuId != null and menuId != ''"> and menu_id = #{menuId}</if>
+             <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
+             <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectSimtooProductById" parameterType="Long" resultMap="SimtooProductResult">
+        <include refid="selectSimtooProductVo"/>
+        where product_id = #{productId}
+    </select>
+        
+    <insert id="insertSimtooProduct" parameterType="SimtooProduct">
+        insert into s_simtoo_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="productId != null and productId != '' ">product_id,</if>
+			<if test="name != null and name != '' ">name,</if>
+			<if test="title != null and title != '' ">title,</if>
+			<if test="money != null and money != '' ">money,</if>
+			<if test="productLunImg != null and productLunImg != '' ">product_lun_img,</if>
+			<if test="productDescribe != null and productDescribe != '' ">product_describe,</if>
+			<if test="inventoryNumber != null and inventoryNumber != '' ">inventory_number,</if>
+			<if test="introduction != null and introduction != '' ">introduction,</if>
+			<if test="specs != null and specs != '' ">specs,</if>
+			<if test="video != null and video != '' ">video,</if>
+			<if test="productFile != null and productFile != '' ">product_file,</if>
+			<if test="faq != null and faq != '' ">faq,</if>
+			<if test="isState != null and isState != '' ">is_state,</if>
+			<if test="isFlg != null and isFlg != '' ">is_flg,</if>
+			<if test="menuId != null and menuId != '' ">menu_id,</if>
+			create_time,
+			update_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="productId != null and productId != ''">#{productId},</if>
+			<if test="name != null and name != ''">#{name},</if>
+			<if test="title != null and title != ''">#{title},</if>
+			<if test="money != null and money != ''">#{money},</if>
+			<if test="productLunImg != null and productLunImg != ''">#{productLunImg},</if>
+			<if test="productDescribe != null and productDescribe != ''">#{productDescribe},</if>
+			<if test="inventoryNumber != null and inventoryNumber != ''">#{inventoryNumber},</if>
+			<if test="introduction != null and introduction != ''">#{introduction},</if>
+			<if test="specs != null and specs != ''">#{specs},</if>
+			<if test="video != null and video != ''">#{video},</if>
+			<if test="productFile != null and productFile != ''">#{productFile},</if>
+			<if test="faq != null and faq != ''">#{faq},</if>
+			<if test="isState != null and isState != ''">#{isState},</if>
+			<if test="isFlg != null and isFlg != ''">#{isFlg},</if>
+			<if test="menuId != null and menuId != ''">#{menuId},</if>
+            now(),
+            now()
+         </trim>
+    </insert>
+	 
+    <update id="updateSimtooProduct" parameterType="SimtooProduct">
+        update s_simtoo_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="money != null  ">money = #{money},</if>
+            <if test="productLunImg != null  and productLunImg != ''  ">product_lun_img = #{productLunImg},</if>
+            <if test="productDescribe != null  and productDescribe != ''  ">product_describe = #{productDescribe},</if>
+            <if test="inventoryNumber != null  ">inventory_number = #{inventoryNumber},</if>
+            <if test="introduction != null  and introduction != ''  ">introduction = #{introduction},</if>
+            <if test="specs != null  and specs != ''  ">specs = #{specs},</if>
+            <if test="video != null  and video != ''  ">video = #{video},</if>
+            <if test="productFile != null  and productFile != ''  ">product_file = #{productFile},</if>
+            <if test="faq != null  and faq != ''  ">faq = #{faq},</if>
+            <if test="isState != null  ">is_state = #{isState},</if>
+            <if test="isFlg != null  ">is_flg = #{isFlg},</if>
+            <if test="menuId != null  ">menu_id = #{menuId},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            update_time = now()
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+	<delete id="deleteSimtooProductById" parameterType="Long">
+        delete from s_simtoo_product where product_id = #{productId}
+    </delete>
+	
+    <delete id="deleteSimtooProductByIds" parameterType="String">
+        delete from s_simtoo_product where product_id in 
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+    
+</mapper>
