@@ -7,6 +7,7 @@ function initUpload(){
         var name = "";
         upload.render({
             elem: '.demoMore'
+            ,accept: 'file'
             ,before: function(){
                 name = this.id;
             }
@@ -24,6 +25,6 @@ function initUpload(){
  */
 function setImg(name,image){
     $("#"+name).val(image);
-    $("#demo_"+name).attr("src",image);
+    name.indexOf("File") < 1 ? $("#demo_"+name).attr("src",image) : $("#demo_"+name).attr("href",image);
     $("#demoMore_"+name).show();
 }

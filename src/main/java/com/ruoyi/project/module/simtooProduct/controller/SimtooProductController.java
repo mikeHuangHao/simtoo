@@ -70,8 +70,13 @@ public class SimtooProductController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(SimtooProduct simtooProduct)
-	{		
-		return toAjax(simtooProductService.insertSimtooProduct(simtooProduct));
+	{
+		try {
+			return toAjax(simtooProductService.insertSimtooProduct(simtooProduct));
+		}catch (Exception e){
+			e.printStackTrace();
+			return toAjax(0);
+		}
 	}
 
 	/**
