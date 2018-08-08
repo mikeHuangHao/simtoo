@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.module.productImg.mapper.ProductImgMapper">
+    
+    <resultMap type="ProductImg" id="ProductImgResult">
+        <result property="productImgId"    column="product_img_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="productName"    column="productName"    />
+    </resultMap>
+	
+	<sql id="selectProductImgVo">
+        select product_img_id, product_id, img_url ,(select name from s_simtoo_product t2 where t2.product_id = t1.product_id) productName from s_product_img t1
+    </sql>
+	
+    <select id="selectProductImgList" parameterType="ProductImg" resultMap="ProductImgResult">
+        <include refid="selectProductImgVo"/>
+        <where>  
+            <if test="productImgId != null and productImgId != ''"> and product_img_id = #{productImgId}</if>
+             <if test="productId != null and productId != ''"> and product_id = #{productId}</if>
+             <if test="imgUrl != null and imgUrl != ''"> and img_url = #{imgUrl}</if>
+         </where>
+    </select>
+    
+    <select id="selectProductImgById" parameterType="Long" resultMap="ProductImgResult">
+        <include refid="selectProductImgVo"/>
+        where product_img_id = #{productImgId}
+    </select>
+        
+    <insert id="insertProductImg" parameterType="ProductImg">
+        insert into s_product_img
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="productImgId != null and productImgId != '' ">product_img_id,</if>
+			<if test="productId != null and productId != '' ">product_id,</if>
+			<if test="imgUrl != null and imgUrl != '' ">img_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="productImgId != null and productImgId != ''">#{productImgId},</if>
+			<if test="productId != null and productId != ''">#{productId},</if>
+			<if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertProductImgList">
+       <!-- <foreach collection="list" item="productImg"  index="index"  separator=";" >
+            insert into s_product_img
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="productImg.productImgId != null and productImg.productImgId != '' ">product_img_id,</if>
+                <if test="productImg.productId != null and productImg.productId != '' ">product_id,</if>
+                <if test="productImg.imgUrl != null and productImg.imgUrl != '' ">img_url,</if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="productImg.productImgId != null and productImg.productImgId != ''">#{productImg.productImgId},</if>
+                <if test="productImg.productId != null and productImg.productId != ''">#{productImg.productId},</if>
+                <if test="productImg.imgUrl != null and productImg.imgUrl != ''">#{productImg.imgUrl},</if>
+            </trim>
+        </foreach>-->
+        insert into s_product_img (product_id, img_url)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.productId},#{item.imgUrl})
+        </foreach>
+    </insert>
+	 
+    <update id="updateProductImg" parameterType="ProductImg">
+        update s_product_img
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null  ">product_id = #{productId},</if>
+            <if test="imgUrl != null  and imgUrl != ''  ">img_url = #{imgUrl},</if>
+        </trim>
+        where product_img_id = #{productImgId}
+    </update>
+
+	<delete id="deleteProductImgById" parameterType="Long">
+        delete from s_product_img where product_img_id = #{productImgId}
+    </delete>
+	
+    <delete id="deleteProductImgByIds" parameterType="String">
+        delete from s_product_img where product_img_id in 
+        <foreach item="productImgId" collection="array" open="(" separator="," close=")">
+            #{productImgId}
+        </foreach>
+    </delete>
+    
+</mapper>

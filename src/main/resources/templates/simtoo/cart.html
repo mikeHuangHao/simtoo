@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc" xmlns:v-model="http://www.w3.org/1999/xhtml"
+	  xmlns:v-on="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>cart</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="cart"/>
+		<meta name="description" content="cart"/>
+		<meta http-equiv="expires" content="0">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="robots" content="all" />
+		<meta name="viewport" content="width=1440">
+		<meta http-equiv="cache-control" content="no-siteapp">
+		<meta name="render" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+		<meta name="author" content="yuanXu">
+		<!--样式链接-->
+		<link href="/simtoo/images/simtoo.ico" rel="shortcut icon" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="/simtoo/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/simtoo/css/font.css">
+		<link rel="stylesheet" type="text/css" href="/simtoo/css/owl.css">
+	</head>
+
+	<body>
+		<div id="wraps">
+			
+			<!--nav-->
+			<div class="header header-slide">
+				<div class="header-top clearfix">
+					<div class="logo"><a href="index.html"><img src="/simtoo/images/logo1.png" /></a></div>
+					<ul class="nav clearfix">
+						<li class="dragonfly" onmouseover="opencat(sub);" onmouseout="closecat(sub)">
+							<a href="dragonfly.html">Dragonfly</a>
+						</li>
+						<li>
+							<a href="javascript:;">Moment</a>
+						</li>
+						<li>
+							<a href="javascript:;">Fairy</a>
+						</li>
+						<li>
+							<a href="javascript:;">Rainbow</a>
+						</li>
+						<li>
+							<a href="javascript:;">Support</a>
+						</li>
+						<li>
+							<a href="javascript:;">Contact</a>
+						</li>
+					</ul>
+					<div class="ricon clearfix">
+						<div class="store-icon">
+							<a class="store-black" href="javascript:;">Store</a>
+						</div>
+						<div class="search-icon">
+								<input id="searchBtn" name="searchBtn" type="submit" value="搜索" class="searchBtn sblack">
+						</div>
+						<!--购物车-->
+						<div class="shop-cart shop-cart-black">
+							<a class="cart-btn" href="javascript:;" title="View your shopping cart"><i class="fa fa-cart"></i></a>
+							<div class="cart-menu">
+								<div class="shop-cart-content">
+									<div class="cart-list">
+										<!--1-->
+										<div class="media clearfix">
+											<a class="cart-product" href="shop.html"><img src="/simtoo/images/product1.jpg" /></a>
+											<div class="cart-text">
+												<h3><a href="shop.html">Phantom Series Multifunctional Adapter 200k → Inspire 1 - Zenmuse X3 Gimbal #008</a></h3>
+												<p class="cart-item">
+													<span>1x$</span>
+													<span class="price">9.00</span>
+												</p>
+												<a class="cart-close" href="javascript:;"><i class="fa fa-bclose"></i></a>
+											</div>
+										</div>
+										<!--1-->
+										<!--1-->
+										<div class="media clearfix">
+											<a class="cart-product" href="shop.html"><img src="/simtoo/images/products5.jpg" /></a>
+											<div class="cart-text">
+												<h3><a href="shop.html">RED Raven Brain With Media Bay 200</a></h3>
+												<p class="cart-item">
+													<span>1x$</span>
+													<span class="price">12.00</span>
+												</p>
+												<a class="cart-close" href="javascript:;"><i class="fa fa-bclose"></i></a>
+											</div>
+										</div>
+										<!--1-->
+									</div>
+									<p class="total">
+										<strong>Subtotal:</strong>
+										<span>$21.00</span>
+									</p>
+									<!--按钮-->
+									<div class="enter-btn clearfix">
+										<a class="btn-left" href="cart.html">View Cart</a>
+										<a class="btn-right" href="checkout.html">Checkout</a>
+									</div>
+									<!--按钮-->
+								</div>
+							</div>
+						</div>
+						<!--购物车-->
+						<div class="login-icon">
+							<a href="javascript:;"><img src="/simtoo/images/login_black.png" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--nav-->
+			
+			<!--nav-menu-->
+			<div class="nav-menu" id="sub" onmouseover="opencat(sub)" onmouseout="closecat(sub)" style="display: none;">
+				<ul class="clearfix">
+					<li>
+						<a href="dragonfly.html">
+							<img src="/simtoo/images/qt.jpg"  /><br />
+                            Dragonfly Drone Pro
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!--nav-menu-->
+			
+			<!--二级nav-->
+			<div class="snav">
+				<div class="snav-list clearfix">
+					<div class="slogo">CART</div>
+				</div>
+			</div>
+			<!--二级nav-->
+			
+			<!--main-->
+			<div class="cart-main">
+				<table cellpadding="0" cellspacing="0">
+					<tr class="b">
+						<td width="8%"></td>
+						<td width="44%">Product</td>
+						<td width="10%">Price</td>
+						<td width="20%">Quantity</td>
+						<td width="10%">Total</td>
+						<td width="8%"></td>
+					</tr>
+					<tr v-for="item in topData">
+						<td class="timg"><a href="shop.html"><img src="/simtoo/images/products1.jpg" /></a></td>
+						<td><a class="atext" href="shop.html">{{item.simtooProduct.name}}</a></td>
+						<td>${{item.simtooProduct.money}}</td>
+						<td>
+						 	<div class="quantity clearfix">
+						 		<input type="number" step="1" min="1" max="" name="quantity"  v-model="addToList" :value="item.count" title="Qty" class="qty" size="4" pattern="[0-9]*" inputmode="numeric">
+						 		<input type="button" value="+" class="plus">
+						 		<input type="button" value="-" class="minus">
+						 	</div>
+						</td>
+						<td>$20.00</td>
+						<td class="delete"><a href="javascript:;">×</a></td>
+					</tr>
+					<!--<tr>
+						<td class="timg"><a href="shop.html"><img src="/simtoo/images/products2.jpg" /></a></td>
+						<td><a class="atext" href="shop.html">Zenmuse A7 Gimbal For Sony A7s 500 </a></td>
+						<td>$35.00</td>
+						<td>
+						 	<div class="quantity clearfix">
+						 		<input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="qty" size="4" pattern="[0-9]*" inputmode="numeric">
+						 		<input type="button" value="+" class="plus">
+						 		<input type="button" value="-" class="minus">
+						 	</div>
+						</td>
+						<td>$35.00</td>
+						<td class="delete"><a href="javascript:;">×</a></td>
+					</tr>
+					<tr>
+						<td class="timg"><a href="shop.html"><img src="/simtoo/images/products3.jpg" /></a></td>
+						<td><a class="atext" href="shop.html">ACR Systems - 15mm Rods Adapter</a></td>
+						<td>$2.00</td>
+						<td>
+						 	<div class="quantity clearfix">
+						 		<input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="qty" size="4" pattern="[0-9]*" inputmode="numeric">
+						 		<input type="button" value="+" class="plus">
+						 		<input type="button" value="-" class="minus">
+						 	</div>
+						</td>
+						<td>$2.00</td>
+						<td class="delete"><a href="javascript:;">×</a></td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							<div class="tlast clearfix">
+								<div class="tleft">
+									<input type="text" placeholder="Coupon code">
+									<input type="submit" class="apply_coupon" name="apply_coupon" value="Apply Coupon">
+								</div>
+								<div class="tright">
+									<input type="submit" class="update_cart" name="update_cart" value="Update Cart">
+								</div>
+							</div>
+						</td>
+					</tr>-->
+				</table>
+				<div class="buy-cart clearfix">
+					<div class="buy-sale">
+						<h1>You may be interested in…</h1>
+						<div class="owl clearfix">
+							<!--1-->
+							<div class="owl-item">
+								<div class="owl-imgs">
+									<span class="onsale">Sale!</span>
+									<div class="owl-img">
+										<img class="owlp" src="/simtoo/images/products4.jpg" style="left: -100%;">
+										<img class="owlh" src="/simtoo/images/products4.jpg" style="left: 0px;">
+									</div>
+									<div class="owl-btn" style="opacity: 0; bottom: 0px;">
+										<a href="javascript:;"><i class="fa fa-cart"></i></a>
+										<a class="second" href="javascript:;"><i class="fa fa-heart"></i></a>
+										<a class="expand" href="javascript:;"><i class="fa fa-expand"></i></a>
+									</div>
+								</div>
+								<div class="owl-text">
+									<a href="javascript:;">Quick Swap Smart Battery Premium Quality</a>
+									<p>
+										<del>$15.00</del>
+										<ins>$12.00</ins>
+									</p>
+								</div>
+							</div>
+							<!--1-->
+							<!--1-->
+							<div class="owl-item">
+								<div class="owl-imgs">
+									<!--<span class="onsale">Sale!</span>-->
+									<div class="owl-img">
+										<img class="owlp" src="/simtoo/images/products5.jpg" style="left: -100%;">
+										<img class="owlh" src="/simtoo/images/products1.jpg" style="left: 0px;">
+									</div>
+									<div class="owl-btn" style="opacity: 0; bottom: 0px;">
+										<a href="javascript:;"><i class="fa fa-cart"></i></a>
+										<a class="second" href="javascript:;"><i class="fa fa-heart"></i></a>
+										<a class="expand" href="javascript:;"><i class="fa fa-expand"></i></a>
+									</div>
+								</div>
+								<div class="owl-text">
+									<a href="javascript:;">GoProfessional Ronin-M Gimbal Adapter</a>
+									<p>
+										<span>$3.00</span>
+									</p>
+								</div>
+							</div>
+							<!--1-->
+							<!--1-->
+							<div class="owl-item">
+								<div class="owl-imgs">
+									<span class="onsale">Sale!</span>
+									<div class="owl-img">
+										<img class="owlp" src="/simtoo/images/products1.jpg">
+										<img class="owlh" src="/simtoo/images/products5.jpg">
+									</div>
+									<div class="owl-btn">
+										<a href="javascript:;"><i class="fa fa-cart"></i></a>
+										<a class="second" href="javascript:;"><i class="fa fa-heart"></i></a>
+										<a class="expand" href="javascript:;"><i class="fa fa-expand"></i></a>
+									</div>
+								</div>
+								<div class="owl-text">
+									<a href="javascript:;">ACR Systems – 15mm Rods Adapter</a>
+									<p>
+										<del>$3.00</del>
+										<ins>$2.00</ins>
+									</p>
+								</div>
+							</div>
+							<!--1-->
+						</div>
+					</div>
+					<div class="cart-totals">
+						<h1>Cart Totals</h1>
+						<table class="totals">
+							<tr>
+								<td class="b" width="50%">Subtotal</td>
+								<td width="50%">$57.00</td>
+							</tr>
+							<tr class="b">
+								<td>Total</td>
+								<td>$57.00</td>
+							</tr>
+						</table>
+						<div class="cart-total-btn">
+							<a href="javascript:;">Proceed to Checkout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--main-->
+			
+			<!--footer-->
+			<div class="footer">
+				<div class="footer-grid">
+					<div class="footer-category">
+						<div class="category-list clearfix">
+							<div class="cell">
+								<p class="title">Products</p>
+								<ul>
+									<li class="cell-item">
+										<a href="dragonfly.html">Drangonfly</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Moment</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Fairy</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Rainbow</a>
+									</li>
+								</ul>
+							</div>
+							<div class="cell">
+								<p class="title">Where to Buy</p>
+								<ul>
+									<li class="cell-item">
+										<a href="javascript:;">Online Store</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Flagship Stores</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Retail Stores</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Apply For Authorized Store</a>
+									</li>
+								</ul>
+							</div>
+							<div class="cell">
+								<p class="title">Support</p>
+								<ul>
+									<li class="cell-item">
+										<a href="javascript:;">Fly Safe</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Product Support</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Repair Services</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">After-Sales Service Policies</a>
+									</li>
+								</ul>
+							</div>
+							<div class="cell">
+								<p class="title">Explore</p>
+								<ul>
+									<li class="cell-item">
+										<a href="javascript:;">Newsroom</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Showcase</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Events</a>
+									</li>
+								</ul>
+							</div>
+							<div class="cell">
+								<p class="title">Gallery</p>
+								<ul>
+									<li class="cell-item">
+										<a href="javascript:;">Forum</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Video</a>
+									</li>
+									<li class="cell-item">
+										<a href="javascript:;">Photo</a>
+									</li>
+								</ul>
+							</div>
+							<div class="cell clast">
+								<p class="title">Subscribe</p>
+								<p class="trends">Get the latest news from SimToo</p>
+								<div class="form-group clearfix">
+									<input placeholder="Your email address" type="text" />
+									<span class="form-submit"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="footer-about clearfix">
+						<a class="flogo" href="index.html"><img src="/simtoo/images/logo.png"></a>
+						<ul class="footer-nav">
+							<li class="nav-item">
+								<a href="about.html">Who We Are</a>
+							</li>
+							<li class="nav-item">
+								<a href="contact.html">Contact Us</a>
+							</li>
+							<li class="nav-item">
+								<a href="careers.html">Careers</a>
+							</li>
+							<li class="nav-item">
+								<a href="javascript:;">RoboMaster</a>
+							</li>
+						</ul>
+						<div class="fimg">
+							<a href="https://www.facebook.com/simtoodrones" target="_blank"><img src="/simtoo/images/f.png" /></a>
+							<a href="https://twitter.com/SimtooDrone" target="_blank"><img src="/simtoo/images/n.png" /></a>
+							<a href="https://www.youtube.com/channel/UCoe2L9aUbHj82C1MgUN8omw" target="_blank"><img src="/simtoo/images/p.png" /></a>
+							<a href="http://weibo.com/simtoo" target="_blank"><img src="/simtoo/images/w.png" /></a>
+							<a href="javascript:;"><img src="/simtoo/images/q.png" /></a>
+							<a href="javascript:;"><img src="/simtoo/images/c.png" /></a>
+						</div>
+					</div>
+					<div class="footer-bottom clearfix">
+						<div class="copyright">Shenzhen Simtoo Intelligent Technology Co.,Ltd.<br />Copyright @ 2018 all rights reserved | <a href="javascript:;">Privacy</a> | <a href="javascript:;">Terms</a></div>
+						<div class="CE">
+							<p>English</p>
+							<div class="CE-list">
+								<span>English</span>
+								<span>中文</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--footer-->
+			<!--图片放大弹窗-->
+			<div class="big-text">
+				<div class="big-img"><img src="/simtoo/images/products5.jpg" /></div>
+				<p>ACR Systems – 15mm Rods Adapter</p>
+				<a href="javascript:;"><i class="fa fa-bclose"></i></a>
+			</div>
+			<div class="img-big"></div>
+			<!--图片放大弹窗-->
+			<!--图片详情弹窗-->
+			<div class="big-list clearfix">
+				<div class="list-img">
+					<div id="owl-demo" class="owl-carousel">
+						<a class="item"><img src="/simtoo/images/products5.jpg" alt=""></a>
+						<a class="item"><img src="/simtoo/images/product2.jpg" alt=""></a>
+						<a class="item"><img src="/simtoo/images/products3.jpg" alt=""></a>
+					</div>
+				</div>
+				<div class="list-text">
+					<h4>ACR Systems – 15mm Rods Adapter</h4>
+					<div class="star-eval">
+					    <span class="stars-bg">
+					        <!-- 宽度由实际数据自行计算 如4.2/5*100% -->
+					        <i class="star-active" style="width: 65%"></i>
+					    </span>
+					    <span class="right-txt"><b>4.2</b>分</span>
+					</div>
+					<a class="review-link" href="javascript:;">(2 customer review)</a>
+					<div class="list-price">
+						<del>$100.00</del>
+						<ins>$90.00</ins>
+					</div>
+					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle of text. All the Lorem…</p>
+					<div class="add-cart">
+						<a href="javascript:;">
+							<i class="fa fa-cart-plus"></i>
+							<span class="title-cart">Add to cart</span>
+						</a>
+					</div>
+					<div class="product_meta">
+						<span class="posted_in">
+							Categories: 
+							<a href="javascript:;" rel="tag">Camera</a>, 
+							<a href="javascript:;" rel="tag">Drone Action</a>, 
+							<a href="javascript:;" rel="tag">Investments</a>,
+							<a href="javascript:;" rel="tag">Singles</a>
+						</span>
+					</div>
+				</div>
+				<div class="list-close"><a href="javascript:;"><i class="fa fa-bclose"></i></a></div>
+			</div>
+			<!--图片详情弹窗-->
+		</div>
+		<!--js-->
+		<script type="text/javascript" src="/simtoo/js/jquery.js"></script>
+		<script type="text/javascript" src="/simtoo/js/main.js"></script>
+		<script type="text/javascript" src="/simtoo/js/owl.carousel.js"></script>
+		<script type="text/javascript" src="/vue/vue.js"></script>
+		<script type="text/javascript" src="/vue/axios.min.js"></script>
+		<script type="text/javascript" src="/simtoo/js/common.js"></script>
+		<script  th:inline="javascript">
+            var dataList = [[${cartList}]];
+			var vm = new Vue({
+                el:'.cart-main',
+                data:{
+                    topData:dataList,
+                },
+                mounted:function(){
+                },
+                methods:{
+                    addToList: function () {
+                        alert(111)
+                    }
+                },
+                watch : {
+                }
+            })
+            // $watch 是一个实例方法
+            /*vm.$watch('inNumber', function (newValue, oldValue) {
+            })*/
+			$(function(){
+				$('#owl-demo').owlCarousel({
+					items: 1,
+					navigation: true,
+					navigationText: ["上一个","下一个"],
+					autoPlay: true,
+					stopOnHover: true
+				})
+			});
+		</script>
+	</body>
+</html>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+

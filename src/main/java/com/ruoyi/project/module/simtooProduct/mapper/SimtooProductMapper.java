@@ -58,5 +58,6 @@ public interface SimtooProductMapper
      * @return 结果
      */
 	public int deleteSimtooProductByIds(String[] productIds);
-	
+
+    SimtooProduct selectSimtooProductByIdImgs(Long productId);
 }

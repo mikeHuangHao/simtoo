@@ -20,17 +20,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isState"    column="is_state"    />
         <result property="isFlg"    column="is_flg"    />
         <result property="menuId"    column="menu_id"    />
+        <result property="menuName"    column="menuName"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
     </resultMap>
+
+    <resultMap type="SimtooProduct" id="SimtooProductResultMaps">
+        <result property="productId"    column="product_id"    />
+        <result property="name"    column="name"    />
+        <result property="title"    column="title"    />
+        <result property="money"    column="money"    />
+        <result property="productLunImg"    column="product_lun_img"    />
+        <result property="productDescribe"    column="product_describe"    />
+        <result property="inventoryNumber"    column="inventory_number"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="specs"    column="specs"    />
+        <result property="video"    column="video"    />
+        <result property="productFile"    column="product_file"    />
+        <result property="faq"    column="faq"    />
+        <result property="isState"    column="is_state"    />
+        <result property="isFlg"    column="is_flg"    />
+        <result property="menuId"    column="menu_id"    />
+        <result property="menuName"    column="menuName"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <collection property="productImg" ofType="ProductImg">
+            <result property="productImgId"    column="product_img_id"    />
+            <result property="productId"    column="product_id"    />
+            <result property="imgUrl"    column="img_url"    />
+            <result property="productName"    column="productName"    />
+        </collection>
+    </resultMap>
 	
 	<sql id="selectSimtooProductVo">
-        select product_id, name, title, money, product_lun_img, product_describe, inventory_number, introduction, specs, video, product_file, faq, is_state, is_flg, menu_id, create_time, update_time from s_simtoo_product
+        select product_id, name, (select name FROM s_ec_menu t1 where t1.menu_id = t2.menu_id) menuName,title, money, product_lun_img, product_describe, inventory_number, introduction, specs, video, product_file, faq, is_state, is_flg, menu_id, create_time, update_time from s_simtoo_product t2
     </sql>
 	
     <select id="selectSimtooProductList" parameterType="SimtooProduct" resultMap="SimtooProductResult">
         <include refid="selectSimtooProductVo"/>
-        <where>  
+        <where>
+            t2.is_flg = 1
             <if test="productId != null and productId != ''"> and product_id = #{productId}</if>
              <if test="name != null and name != ''"> and name = #{name}</if>
              <if test="title != null and title != ''"> and title = #{title}</if>
@@ -49,13 +78,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="createTime != null and createTime != ''"> and create_time = #{createTime}</if>
              <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime}</if>
          </where>
+        ORDER BY  is_flg ASC
     </select>
     
     <select id="selectSimtooProductById" parameterType="Long" resultMap="SimtooProductResult">
         <include refid="selectSimtooProductVo"/>
-        where product_id = #{productId}
+        where
+        t2.is_state = 1 AND t2.is_flg = 1 AND
+        product_id = #{productId}
     </select>
-        
+
+    <select id="selectSimtooProductByIdImgs" parameterType="Long" resultMap="SimtooProductResultMaps">
+        select t1.* , t2.* from s_simtoo_product t2
+        left JOIN s_product_img t1 ON t1.product_id = t2.product_id
+        where
+        t2.is_state = 1 AND t2.is_flg = 1 AND
+        t2.product_id = #{productId}
+    </select>
+
     <insert id="insertSimtooProduct" parameterType="SimtooProduct">
         insert into s_simtoo_product
 		<trim prefix="(" suffix=")" suffixOverrides=",">

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.ruoyi.project.module.menu.domain.EcMenu;
 import com.ruoyi.project.module.menu.service.IEcMenuService;
+import com.ruoyi.project.module.simtooProduct.domain.SimtooProduct;
+import com.ruoyi.project.module.simtooProduct.service.ISimtooProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.project.system.dict.domain.DictData;
@@ -22,6 +24,9 @@ public class DictService
 
     @Autowired
     private IEcMenuService ecMenuService;
+
+    @Autowired
+    private ISimtooProductService simtooProductService;
 
     /**
      * 根据字典类型查询字典数据信息
@@ -51,6 +56,16 @@ public class DictService
         EcMenu ecMenu = new EcMenu();
         List<EcMenu> lists = ecMenuService.selectEcMenuList(ecMenu);
         return lists;
+    }
+
+    /**
+     * 查询产品管理列表
+     */
+    public List<SimtooProduct> getProductList(String dictType)
+    {
+        SimtooProduct simtooProduct = new SimtooProduct();
+        List<SimtooProduct> list = simtooProductService.selectSimtooProductList(simtooProduct);
+        return list;
     }
 
 }

@@ -1,8 +1,11 @@
 package com.ruoyi.project.module.menu.domain;
 
+import com.ruoyi.project.module.simtooProduct.domain.SimtooProduct;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
+
+import java.util.List;
 
 /**
  * 一级菜单表 s_ec_menu
@@ -25,7 +28,18 @@ public class EcMenu extends BaseEntity
 	/** 删除状态（1 正常 2 删除 ） */
 	private Integer isFlg;
 
-	public void setMenuId(Long menuId) 
+	private List<SimtooProduct> product;
+
+
+	public List<SimtooProduct> getProduct() {
+		return product;
+	}
+
+	public void setProduct(List<SimtooProduct> product) {
+		this.product = product;
+	}
+
+	public void setMenuId(Long menuId)
 	{
 		this.menuId = menuId;
 	}

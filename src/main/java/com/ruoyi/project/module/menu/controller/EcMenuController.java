@@ -110,8 +110,15 @@ public class EcMenuController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
-		return toAjax(ecMenuService.deleteEcMenuByIds(ids));
+	{
+		try {
+			EcMenu em = new EcMenu();
+			em.setIsFlg(2);
+			em.setMenuId(Long.valueOf(ids));
+			return toAjax(ecMenuService.updateEcMenu(em));
+		}catch (Exception e){
+			return toAjax(0);
+		}
 	}
 	
 }

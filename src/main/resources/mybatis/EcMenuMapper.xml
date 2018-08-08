@@ -11,6 +11,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sort"    column="sort"    />
         <result property="isFlg"    column="is_flg"    />
     </resultMap>
+
+    <resultMap type="EcMenu" id="EcMenuResultMap">
+        <result property="menuId"    column="menu_id"    />
+        <result property="name"    column="name"    />
+        <result property="state"    column="state"    />
+        <result property="sort"    column="sort"    />
+        <result property="isFlg"    column="is_flg"    />
+        <collection property="product" ofType="SimtooProduct">
+            <result property="productId"    column="product_id"    />
+            <result property="name"    column="name"    />
+            <result property="title"    column="title"    />
+            <result property="money"    column="money"    />
+            <result property="productLunImg"    column="product_lun_img"    />
+            <result property="productDescribe"    column="product_describe"    />
+            <result property="inventoryNumber"    column="inventory_number"    />
+            <result property="introduction"    column="introduction"    />
+            <result property="specs"    column="specs"    />
+            <result property="video"    column="video"    />
+            <result property="productFile"    column="product_file"    />
+            <result property="faq"    column="faq"    />
+            <result property="isState"    column="is_state"    />
+            <result property="isFlg"    column="is_flg"    />
+            <result property="menuId"    column="menu_id"    />
+            <result property="menuName"    column="menuName"    />
+        </collection>
+    </resultMap>
 	
 	<sql id="selectEcMenuVo">
         select menu_id, name, state, sort, is_flg from s_ec_menu
@@ -26,7 +52,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="isFlg != null and isFlg != ''"> and is_flg = #{isFlg}</if>
          </where>
     </select>
-    
+
+    <select id="selectMenuEcList"  resultMap="EcMenuResultMap" >
+        select t1.* , t2.* from s_ec_menu t1
+        LEFT JOIN s_simtoo_product t2 ON t1.menu_id = t2.menu_id
+        <where>
+            t1.is_flg = 1
+           <!-- <if test="menuId != null and menuId != ''"> and menu_id = #{menuId}</if>
+             <if test="name != null and name != ''"> and name = #{name}</if>
+             <if test="state != null and state != ''"> and state = #{state}</if>
+             <if test="sort != null and sort != ''"> and sort = #{sort}</if>
+             <if test="isFlg != null and isFlg != ''"> and is_flg = #{isFlg}</if>-->
+         </where>
+    </select>
+
     <select id="selectEcMenuById" parameterType="Long" resultMap="EcMenuResult">
         <include refid="selectEcMenuVo"/>
         where menu_id = #{menuId}

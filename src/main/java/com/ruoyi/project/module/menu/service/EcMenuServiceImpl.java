@@ -79,5 +79,15 @@ public class EcMenuServiceImpl implements IEcMenuService
 	{
 		return ecMenuMapper.deleteEcMenuByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 * 前台查询接口
+	 * @param ecMenu
+	 * @return
+	 */
+	@Override
+	public List<EcMenu> selectMenuEcList(EcMenu ecMenu) {
+		return ecMenuMapper.selectMenuEcList(ecMenu);
+	}
+
 }

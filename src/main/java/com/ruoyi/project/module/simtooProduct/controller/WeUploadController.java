@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
 import com.ruoyi.project.util.ResponseUtil;
 import com.ruoyi.project.util.UploadUtil;
 import org.slf4j.Logger;
@@ -51,6 +50,7 @@ public class WeUploadController {
 	    	        config = "{\"state\": \"SUCCESS\"," +
 	    	                "\"url\": \"/"+image+"\"," +
 	    	                "\"title\": \"/"+image+"\"," +
+	    	                "\"src\": \"/"+image+"\"," +
 	    	                "\"original\": \"/"+image+"\"}";
 
 	            }

@@ -52,5 +52,6 @@ public interface IEcMenuService
      * @return 结果
      */
 	public int deleteEcMenuByIds(String ids);
-	
+
+    List<EcMenu> selectMenuEcList(EcMenu ecMenu);
 }

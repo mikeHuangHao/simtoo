@@ -43,7 +43,10 @@
 				},
 				{
 					field : 'state', 
-					title : '是否显示（1 正常 2 不显示）' 
+					title : '是否显示（1 正常 2 不显示）' ,
+                    formatter: function(value, row, index) {
+                        return "<span class='badge badge-" + (value == 1 ? "primary" : "danger") + "'>" + (value == 1 ? "正常" : "不显示") + "</span>";
+                    }
 				},
 				{
 					field : 'sort', 
@@ -51,7 +54,10 @@
 				},
 				{
 					field : 'isFlg', 
-					title : '删除状态（1 正常 2 删除 ）' 
+					title : '删除状态（1 正常 2 删除 ）',
+                    formatter: function(value, row, index) {
+                        return "<span class='badge badge-" + (value == 1 ? "primary" : "danger") + "'>" + (value == 1 ? "正常" : "删除") + "</span>";
+                    }
 				},
 		        {
 		            title: '操作',

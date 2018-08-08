@@ -17,6 +17,7 @@ import ${package}.service.I${className}Service;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
+import java.util.ArrayList;
 
 /**
  * ${tableComment} 信息操作处理
@@ -48,9 +49,14 @@ public class ${className}Controller extends BaseController
 	@ResponseBody
 	public TableDataInfo list(${className} ${classname})
 	{
-		startPage();
-        List<${className}> list = ${classname}Service.select${className}List(${classname});
-		return getDataTable(list);
+        List<${className}> list = new ArrayList<${className}>();
+	    try{
+			startPage();
+			list = ${classname}Service.select${className}List(${classname});
+			return getDataTable(list);
+        }catch (Exception e){
+            return getDataTable(list);
+        }
 	}
 	
 	/**
@@ -70,8 +76,12 @@ public class ${className}Controller extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(${className} ${classname})
-	{		
-		return toAjax(${classname}Service.insert${className}(${classname}));
+	{
+	    try{
+			return toAjax(${classname}Service.insert${className}(${classname}));
+        }catch (Exception e){
+            return toAjax(0);
+        }
 	}
 
 	/**
@@ -93,8 +103,12 @@ public class ${className}Controller extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(${className} ${classname})
-	{		
-		return toAjax(${classname}Service.update${className}(${classname}));
+	{
+        try{
+			return toAjax(${classname}Service.update${className}(${classname}));
+        }catch (Exception e){
+            return toAjax(0);
+        }
 	}
 	
 	/**
@@ -105,8 +119,12 @@ public class ${className}Controller extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
-		return toAjax(${classname}Service.delete${className}ByIds(ids));
+	{
+	    try{
+            return toAjax(${classname}Service.delete${className}ByIds(ids));
+        }catch (Exception e){
+            return toAjax(0);
+        }
 	}
 	
 }

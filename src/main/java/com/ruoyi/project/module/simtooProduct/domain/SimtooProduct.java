@@ -1,11 +1,13 @@
 package com.ruoyi.project.module.simtooProduct.domain;
 
+import com.ruoyi.project.module.productImg.domain.ProductImg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 产品管理表 s_simtoo_product
@@ -52,7 +54,27 @@ public class SimtooProduct extends BaseEntity
 	/** 修改时间 */
 	private Date updateTime;
 
-	public void setProductId(Long productId) 
+	private String menuName;
+
+	private List<ProductImg> productImg;
+
+	public List<ProductImg> getProductImg() {
+		return productImg;
+	}
+
+	public void setProductImg(List<ProductImg> productImg) {
+		this.productImg = productImg;
+	}
+
+	public String getMenuName() {
+		return menuName;
+	}
+
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+
+	public void setProductId(Long productId)
 	{
 		this.productId = productId;
 	}

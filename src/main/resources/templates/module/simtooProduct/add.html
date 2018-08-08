@@ -8,7 +8,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">产品名称：</label>
 				<div class="col-sm-8">
-					<input id="name" name="name" class="form-control" type="text">
+					<input id="name" name="name" required class="form-control" type="text" maxlength="30">
 				</div>
 			</div>
 			<div class="form-group">
@@ -23,13 +23,13 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">产品标题：</label>
 				<div class="col-sm-8">
-					<input id="title" name="title" class="form-control" type="text">
+					<input id="title" name="title" class="form-control" type="text" required maxlength="100">
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">金额：</label>
 				<div class="col-sm-8">
-					<input id="money" name="money" class="form-control" type="text">
+					<input id="money" name="money" class="form-control" type="text" required maxlength="10">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -37,7 +37,7 @@
 				<div class="col-sm-8">
 					<!--<input id="productLunImg" name="productLunImg" class="form-control" type="text">-->
 					<button type="button" class="layui-btn demoMore" style="display: block;margin-bottom: 20px;" lay-data="{url: '/upload',id:'productLunImg'}">上传图片</button>
-					<input id="productLunImg" name="productLunImg" class="form-control" type="hidden">
+					<input id="productLunImg" name="productLunImg" class="form-control" type="hidden" required>
 					<div id="demoMore_productLunImg" style="display: none">
 						<img class="layui-upload-img" id="demo_productLunImg" src=""   style="width:200px;height:200px;margin-left: 100px" >
 					</div>
@@ -46,13 +46,14 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">产品描述：</label>
 				<div class="col-sm-8">
-					<input id="productDescribe" name="productDescribe" class="form-control" type="text">
+					<!--<input id="productDescribe" name="productDescribe" class="form-control" type="text">-->
+					<script id="productDescribe" type="text/plain" style="width:100%;height:300px;z-index:999999"></script>
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">库存数量：</label>
 				<div class="col-sm-8">
-					<input id="inventoryNumber" name="inventoryNumber" class="form-control" type="text">
+					<input id="inventoryNumber" name="inventoryNumber" class="form-control" type="text" required minlength="10">
 				</div>
 			</div>
 			<div class="form-group">	
@@ -83,7 +84,7 @@
 				<div class="col-sm-8">
 					<!--<input id="productFile" name="productFile" class="form-control" type="text" >-->
 					<button type="button" class="layui-btn demoMore" style="display: block;margin-bottom: 20px;" lay-data="{url: '/upload',id:'productFile'}">上传文件</button>
-					<input id="productFile" name="productFile" class="form-control" type="hidden">
+					<input id="productFile" name="productFile" class="form-control" type="hidden" required>
 					<div id="demoMore_productFile" style="display: none">
 						<a href=""  target="_blank" id="demo_productFile">点击查看</a>
 					</div>
@@ -112,9 +113,9 @@
 		</form>
 	</div>
     <div th:include="include::footer"></div>
-	<script th:src="@{/js/common/uploadCommon.js}"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/ueEdit/ueditor.config.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/ueEdit/ueditor.all.min.js"> </script>
+	<script th:src="@{/js/common/uploadCommon.js}"></script>
 	<script>
         var prefix = ctx + "module/simtooProduct"
        $("#form-simtooProduct-add").validate({
@@ -124,12 +125,11 @@
                 },
             },
             submitHandler: function(form) {
-                var addValue = $('#form-simtooProduct-add').serialize();
-                alert($('#form-simtooProduct-add').serialize().introduction)
-                addValue["introduction"]= UE.getEditor('introduction').getContent();
-                addValue.specs= UE.getEditor('specs').getContent();
-                addValue.faq= UE.getEditor('faq').getContent();
-               $.operate.save(prefix + "/add", addValue);
+                var addValue ="&introduction="+UE.getEditor('introduction').getContent();
+                addValue+="&specs="+UE.getEditor('specs').getContent();
+                addValue+="&faq="+UE.getEditor('faq').getContent();
+                addValue+="&productDescribe="+UE.getEditor('productDescribe').getContent();
+               $.operate.save(prefix + "/add", $('#form-simtooProduct-add').serialize()+addValue);
             }
         });
         $(function(){
@@ -137,18 +137,9 @@
             var ueid = UE.getEditor('introduction');
             var uespecs = UE.getEditor('specs');
             var uefaq = UE.getEditor('faq');
+            var uepd = UE.getEditor('productDescribe');
             ueEditUploadImages();
         })
-       function ueEditUploadImages(){
-           UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-           UE.Editor.prototype.getActionUrl = function(action) {
-               if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage' || action == "uploadvideo") {
-                   return '/admin/weUpload'; //在这里返回我们实际的上传图片地址
-               }else {
-                   return this._bkGetActionUrl.call(this, action);
-               }
-           }
-       }
 	</script>
 </body>
 </html>

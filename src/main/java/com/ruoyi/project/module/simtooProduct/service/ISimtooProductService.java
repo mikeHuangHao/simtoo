@@ -1,6 +1,8 @@
 package com.ruoyi.project.module.simtooProduct.service;
 
 import com.ruoyi.project.module.simtooProduct.domain.SimtooProduct;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -50,5 +52,13 @@ public interface ISimtooProductService
      * @return 结果
      */
 	public int deleteSimtooProductByIds(String ids);
-	
+
+    SimtooProduct selectSimtooProductByIdImgs(Long aLong);
+
+	/**
+	 * 查询商品是否存在并且检查库存是否充足,并且添加到购物车
+	 * @param aLong
+	 * @return
+	 */
+	boolean selectCheckProductAddCart(Long aLong,Integer count);
 }

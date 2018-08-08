@@ -42,6 +42,10 @@
 					title : '产品名称' 
 				},
 				{
+					field : 'menuName',
+					title : '父级目录名称',
+				},
+				{
 					field : 'title', 
 					title : '产品标题' 
 				},
@@ -83,11 +87,10 @@
 				},
 				{
 					field : 'isState', 
-					title : '显示状态(1上架 2下架)' 
-				},
-				{
-					field : 'menuId', 
-					title : '父级ID' 
+					title : '显示状态(1上架 2下架)' ,
+                    formatter: function(value, row, index) {
+                        return "<span class='badge badge-" + (value == 1 ? "primary" : "danger") + "'>" + (value == 1 ? "上架" : "下架") + "</span>";
+                    }
 				},
 				{
 					field : 'createTime', 
@@ -99,7 +102,10 @@
 				},
 				{
 					field : 'isFlg',
-					title : '是否删除(1正常 2删除)'
+					title : '是否删除(1正常 2删除)',
+                    formatter: function(value, row, index) {
+                        return "<span class='badge badge-" + (value == 1 ? "primary" : "danger") + "'>" + (value == 1 ? "正常" : "删除") + "</span>";
+                    }
 				},
 		        {
 		            title: '操作',

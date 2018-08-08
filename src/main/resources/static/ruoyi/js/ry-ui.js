@@ -362,8 +362,8 @@
             // 批量删除信息
             batRemove: function() {
         		var rows = $.common.isEmpty($.table._option.id) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.id);
-        		if (rows.length == 0) {
-        			$.modal.alertWarning("请至少选择一条记录");
+        		if (rows.length == 0 || rows.length > 1) {
+        			$.modal.alertWarning("请选择一条记录");
         			return;
         		}
         		$.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function() {
@@ -374,7 +374,6 @@
             },
             // 添加信息
             add: function(id) {
-        		console.log(111111111111);
             	var url = $.common.isEmpty(id) ? $.table._option.createUrl : $.table._option.createUrl.replace("{id}", id);
                 $.modal.open("添加" + $.table._option.modalName, url);
             },

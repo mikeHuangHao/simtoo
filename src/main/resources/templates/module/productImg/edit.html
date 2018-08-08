@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-productImg-edit" th:object="${productImg}">
+            <input id="productImgId" name="productImgId" th:field="*{productImgId}"  type="hidden">
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">产品ID：</label>
+                <div class="col-sm-8">
+                   <!-- <input id="productId" name="productId" th:field="*{productId}" class="form-control" type="text">-->
+                    <select class="form-control" name="productId" th:with="type=${@dict.getProductList('')}">
+                        <option th:each="e:${type}" th:text="${e['name']}" th:value="${e['productId']}" th:field="*{productId}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">	
+                <label class="col-sm-3 control-label">图片地址：</label>
+                <div class="col-sm-8">
+                    <!--<input id="imgUrlTemp"  th:value="*{imgUrl}" class="form-control" type="hidden">-->
+                    <button type="button" class="layui-btn demoMore" style="display: block;margin-bottom: 20px;" lay-data="{url: '/upload',id:'imgUrl'}">上传图片</button>
+                    <input id="imgUrl" name="imgUrl" th:value="*{imgUrl}" class="form-control" type="hidden" required>
+                    <div id="demoMore_imgUrl" style="display: block">
+                        <!--<img  class="layui-upload-img" id="demo_imgUrl" src="http://127.0.0.1:808/1a2abd8b-cafc-4aa8-b8b9-73e70b969002.jpg"   style="width:200px;height:200px;margin-left: 100px" >-->
+                    </div>
+                </div>
+            </div>
+			<div class="form-group">
+				<div class="form-control-static col-sm-offset-9">
+					<button type="submit" class="btn btn-primary">提交</button>
+					<button onclick="$.modal.close()" class="btn btn-danger" type="button">关闭</button>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script th:src="@{/js/common/uploadCommon.js}"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "module/productImg"
+		$("#form-productImg-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			submitHandler: function(form) {
+				$.operate.save(prefix + "/edit", $('#form-productImg-edit').serialize());
+			}
+		});
+        var urls = $("#imgUrl").val().substring(0,$("#imgUrl").val().length - 1).split(",");
+        $.each(urls,function(i,item){
+           $("#demoMore_imgUrl").append('<img  class="layui-upload-img" id="demo_imgUrl" src="'+item+'"   style="width:200px;height:200px;margin-left: 100px" >')
+        });
+        initUploadS();
+	</script>
+</body>
+</html>

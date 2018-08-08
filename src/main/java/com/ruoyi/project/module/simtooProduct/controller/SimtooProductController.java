@@ -18,6 +18,8 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.framework.web.domain.AjaxResult;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 产品管理 信息操作处理
  * 
@@ -72,6 +74,7 @@ public class SimtooProductController extends BaseController
 	public AjaxResult addSave(SimtooProduct simtooProduct)
 	{
 		try {
+			simtooProduct.setIsFlg(1);
 			return toAjax(simtooProductService.insertSimtooProduct(simtooProduct));
 		}catch (Exception e){
 			e.printStackTrace();
@@ -97,8 +100,16 @@ public class SimtooProductController extends BaseController
 	@Log(title = "产品管理", action = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(SimtooProduct simtooProduct)
-	{		
+	public AjaxResult editSave(SimtooProduct simtooProduct , HttpServletRequest request)
+	{
+		String productDescribe = request.getParameter("productDescribe");
+		String introduction = request.getParameter("introduction");
+		String specs = request.getParameter("specs");
+		String faq = request.getParameter("faq");
+		simtooProduct.setProductDescribe(productDescribe);
+		simtooProduct.setIntroduction(introduction);
+		simtooProduct.setSpecs(specs);
+		simtooProduct.setFaq(faq);
 		return toAjax(simtooProductService.updateSimtooProduct(simtooProduct));
 	}
 	
@@ -110,8 +121,11 @@ public class SimtooProductController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
-		return toAjax(simtooProductService.deleteSimtooProductByIds(ids));
+	{
+		SimtooProduct simtooProduct = new SimtooProduct();
+		simtooProduct.setProductId(Long.valueOf(ids));
+		simtooProduct.setIsFlg(2);
+		return toAjax(simtooProductService.updateSimtooProduct(simtooProduct));
 	}
 	
 }

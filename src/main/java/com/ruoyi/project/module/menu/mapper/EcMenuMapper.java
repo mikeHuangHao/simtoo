@@ -59,5 +59,11 @@ public interface EcMenuMapper
      * @return 结果
      */
 	public int deleteEcMenuByIds(String[] menuIds);
-	
+
+	/**
+	 * 前台查询接口
+	 * @param ecMenu
+	 * @return
+	 */
+	List<EcMenu> selectMenuEcList(EcMenu ecMenu);
 }
